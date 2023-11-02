@@ -1,0 +1,32 @@
+<% if User.find(session[:current_user_id]).role == "admin" || User.find(session[:current_user_id]).role == "billing staff" %>
+    <%= form_with(url: order_filter_path) do |form| %>
+    <section class="container OrderFilter-form " >
+
+    <div class="container Form-section">  
+        <%= form.label :from_date %>
+            <br/>
+        <%= form.date_field :from_date, class: "form-date Form-Input" %>
+    </div>
+<br/>
+    <div class="container Form-section">  
+        <%= form.label :to_date %>
+            <br/>
+        <%= form.date_field :to_date, class: "form-date Form-Input" %>
+    </div>
+<br/>
+    <div class="container Form-section">  
+        <%= form.label :order_status %>
+            <br/>
+        <%= form.select :delivered_at, options_for_select(["pending delivery", "delivered", "View all orders"]), :value => [nil, Date.today], class: "form-select Form-Input" %>
+    </div>
+    <br/>
+    <div class="container Form-section">
+        <%= form.submit "submit", class: "btn btn-sm btn-outline-secondary Form-submit " %>
+    </div>
+
+    </section>
+    <% end %>
+    
+<% else %>
+<%= render "404" %>
+<% end %>

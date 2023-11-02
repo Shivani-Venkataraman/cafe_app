@@ -1,0 +1,22 @@
+<img class='bg-img'>
+<main class='Has-bg-img'>
+<div class=container style="text-align:center;margin-top:2%;">
+
+    <h2 style=font-size:375%; > DailyGrind </h2>
+    <p style="font-family:poppins;font-weight:400;font-size:1rem"><i>Delicious food now at your fingertips!</i></p>
+
+    <i class="fad fa-mug-hot fa-7x "></i>
+    <br/><br/>
+<%= link_to "Browse Menu", cafe_path, class: "btn btn-secondary btn-lg linkto", style: "text-transform:none;color:#fff;font-family:poppins;font-style:italic;font-weight:400;" %>
+<br/>
+<br/>
+<p style="font-family:poppins;font-weight:400;font-size:1rem">OR</p>
+
+<h6 class="Home-authenticate">
+    <%= link_to "Login", sessions_path, class: "btn btn-secondary linkto", style: "text-transform:none;color:#fff;text-decoration:none;" %>
+-
+    <%= link_to "SignUp", new_user_path(:role => "customer"), class: "btn btn-secondary linkto", style: "text-transform:none;color:#fff;text-decoration:none;" %>
+</h6>
+</div>
+
+</main>

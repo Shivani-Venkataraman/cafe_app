@@ -1,0 +1,130 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.btn {
+  text-transform: none;
+}
+.rails_link_to {
+  color: green;
+  text-decoration: none;
+}
+.rails_link_to:hover {
+  color: green;
+  background-color: transparent;
+}
+.linkto {
+  /* background: none; */
+  color: blue;
+  text-decoration: none;
+}
+.linkto:hover {
+  color: blue;
+  background: none;
+}
+.UsersNew {
+  max-width: 500px;
+  text-align: center;
+}
+.Form-submit {
+  text-transform: none;
+}
+.signup {
+  color: black;
+  font-size: 1rem;
+}
+
+.bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-image: url("https://b.zmtcdn.com/web_assets/81f3ff974d82520780078ba1cfbd453a1583259680.png");
+  background-repeat: repeat-y;
+  background-size: cover;
+  -webkit-filter: blur(0.1px);
+  -moz-filter: blur(0.1px);
+  -o-filter: blur(0.1px);
+  -ms-filter: blur(0.1px);
+  filter: blur(0.1px);
+  opacity: 60%;
+}
+.Has-bg-img {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.Design-Menu {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.navigation {
+  position: relative;
+  top: 0;
+  z-index: 20;
+}
+.Home-authenticate {
+  font-family: Poppins;
+  font-weight: 800;
+  font-style: italic;
+}
+body {
+  padding-bottom: 5rem;
+}
+footer {
+  padding: 1.1% 0 0.7% 0;
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  background-color: rgba(14, 14, 14, 0.945);
+}
+.footer {
+  margin-bottom: 0.8%;
+  color: #fff;
+  font-family: Poppins;
+  font-size: 0.9rem;
+  font-weight: 200;
+  align-items: center;
+}
+.fa-heart {
+  color: red;
+}
+.footer-link {
+  background: none;
+  color: cyan;
+}
+a {
+  background: none;
+  text-decoration: none;
+}
+a:hover,
+.footer-link:hover {
+  background: none;
+}
+@media screen and (max-width: 768px) {
+  footer {
+    padding: 2% 0 1.5% 0;
+  }
+}

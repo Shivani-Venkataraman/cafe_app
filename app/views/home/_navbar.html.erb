@@ -1,0 +1,87 @@
+<div class='navigation'>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <%= link_to "DailyGrind", "/", class: "btn btn-outline-primary navbar-brand" %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+      <li class="nav-item"> <a class="nav-link"> <i style='color:cyan;'> Hello <%= @current_user == nil ? "Guest" : @current_user.name %> </i> </a> </li>
+
+        <li class="nav-item">
+          <%= link_to "Menu", cafe_path, class: " nav-link active" %>
+          <% # <a class="nav-link active" aria-current="page" href="#">Browse Menu</a> %>
+        </li>
+        
+      <% if @current_user != nil %>
+
+        <li class="nav-item">
+          <%= link_to "Shopping Cart", cafe_cart_path, class: "nav-link ShoppingCart-Navbar" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "My Orders", order_path, class: "nav-link" %>
+          <% # <a class="nav-link" href="#">Link</a> %>
+        </li>
+
+        <li class="nav-item">
+          <%= link_to "Change Password", edit_user_path(@current_user), class: "nav-link" %>
+        </li>
+
+        <% if @current_user.role == "admin" || @current_user.role == "billing staff" %>
+
+        <li class="nav-item">
+          <%= link_to "View Orders", order_view_path, class: "nav-link" %>
+        </li>
+      <% end %>
+
+        <% if @current_user.role == "admin" %>
+
+        <li class="nav-item">
+          <%= link_to "Design Menu", "/menu_categories", class: "nav-link" %>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#navbarDropdown" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Users
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <% # <li><a class="dropdown-item" href="#">View Users</a></li> %>
+            <%= link_to "View Users", users_path, class: "dropdown-item rails_link_to" %>
+            <li><hr class="dropdown-divider"></li> 
+            <%= link_to "Create Billing Staff", new_user_path(:role => "billing staff"), user: @users, class: "dropdown-item rails_link_to" %>
+
+            <% # <li><hr class="dropdown-divider"></li> %>
+            <% # <li><a class="dropdown-item" href="#">Owners</a></li> %>
+            <%= link_to "Create Admin", new_user_path(:role => "admin"), class: "dropdown-item rails_link_to" %>
+          </ul>
+        </li>
+        <li>
+            <%= link_to "Filter Order", order_filter_path, class: "nav-link" %>
+        </li>
+             <!-- <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>  -->
+          <% end %>
+
+      <% end %>
+        
+      </ul>
+
+      <% # form tag %>
+      <main class="d-flex">
+
+         <% # <button class="btn btn-outline-success"  type="submit"> Sign-Out </button> %>
+        <% if @current_user != nil %>
+         <%= button_to "Sign Out", "/signout", method: :delete, type: "submit", class: "btn btn-sm btn-outline-primary" %>
+        <% end %>
+      </main>
+    </div>
+
+
+  </div>
+</nav>
+
+</div>

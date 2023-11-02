@@ -1,0 +1,125 @@
+<article>
+<br/>
+<div id = dom class="container" style="display:flex;">
+
+<section class="container Menu-container">
+<h2 class="MenuHeading">MENU</h2>
+<% cart_items_id = @cart_items.all.map { |cart_item| cart_item.menu_item_id } %>
+<% @navbar_id = "a" %>
+<% @menu_categories.each do |menu_category| %>
+
+
+<nav class="navbar navbar-light">
+    <p class="MenuCategory-Name"><%= menu_category.name %> </p> <span> Items : <%= @menu_items.where(menu_category_id: menu_category.id).count %> <span>
+
+    <button class="navbar-toggler ms-auto" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#<%= @navbar_id %>" aria-controls="<%= @navbar_id %>"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+</nav>
+    <div class="collapse" id="<%= @navbar_id %>">
+        <div class="shadow-3 p-4">
+
+        <% @menu_items.where(menu_category_id: menu_category.id).each do |menu_item| %>
+ 
+            <div class="card" style="width: 18rem;display:inline;">
+            <% # <img src="..." class="card-img-top" alt="..."> %>
+            <div class="card-body">
+                <h5 style="display:flex; justify-content:space-between;align-items:center;" class="card-title MenuItem-Name"> <span><%= menu_item.name %></span><span> ₹<%= menu_item.price %></span> </h5>
+                <p class="card-text">  <i><%= menu_item.description %></i></p>
+
+                <% if cart_items_id.include? menu_item.id %>
+                <div class="plus-minus">
+                <%= button_to "+", { :controller => "shopping_cart", :action => "create", :menu_category_name => menu_category.name,
+                                     :menu_item_id => menu_item.id, :menu_item_name => menu_item.name,
+                                     :menu_item_price => menu_item.price }, remote: true, class: "btn plus-minus btn-success", style: "color: #fff;" %>
+
+                <% # Group & count %>
+
+                <p class="CartItem-NumberCount"><%= @cart_items.where(menu_item_name: menu_item.name).count %></p>
+                <%= button_to "-", { :controller => "shopping_cart", :action => "destroy", :id => @cart_items.where(:menu_item_id => menu_item.id).first, :menu_category_name => menu_category.name,
+                                     :menu_item_id => menu_item.id, :menu_item_name => menu_item.name,
+                                     :menu_item_price => menu_item.price }, method: :delete, remote: true, class: "btn plus-minus btn-success", style: "color: #fff;" %>
+                </div>
+                <% else %>
+                <% # ADD Items to Shopping Cart %>
+                <%= button_to "Add", { :controller => "shopping_cart", :action => "create", :menu_category_name => menu_category.name,
+                                       :menu_item_id => menu_item.id, :menu_item_name => menu_item.name,
+                                       :menu_item_price => menu_item.price }, remote: true, class: "btn btn-success", style: "color:#fff;" %>
+                <% end %>
+
+            </div>
+            </div>
+                <hr style="border:0.1px solid;">
+        <% end %>
+        </div>
+    </div>
+    <% @navbar_id = @navbar_id + "1" %>
+    <% end %>
+</section>
+
+<div class="vertical-line"></div>
+
+<section id="shopping-cart" class="container ShoppingCart-container">
+<h4 class="CartHeading"> Shopping Cart </h4>
+
+        <table  style="text-align:center;" class="table table-hover" >
+        <thead>
+        <tr>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Price</th>
+        </tr>
+        </thead>
+
+        <% # Grouping cart items in a hash %>
+        <% cart_items = @cart_items.all.map.group_by { |model| model = model.menu_item_name } %>
+        <% total = 0 %>
+        <% cart_items.each do |cart_item| %>
+        <% total = total + @cart_items.where(menu_item_name: cart_item.last.first.menu_item_name).count * cart_item.last.first.menu_item_price %>
+    
+          <tbody>
+          <tr>
+            <td><p class="shoppingCart-Item" style="width:7rem;"><%= cart_item.last.first.menu_item_name %> </p></td>
+
+            <td>
+
+            <div class="plus-minus-shoppingcart">
+                <%= button_to "+", { :controller => "shopping_cart", :action => "create", :menu_category_name => cart_item.last.first.menu_category_name,
+                                     :menu_item_id => cart_item.last.first.menu_item_id, :menu_item_name => cart_item.last.first.menu_item_name,
+                                     :menu_item_price => cart_item.last.first.menu_item_price }, remote: true, class: "btn plus-minus btn-success" %>
+
+                <% # Group & count %>
+
+                <p class="shoppingCart-Item" style="padding:0 0.8rem;"> <%= @cart_items.where(menu_item_name: cart_item.last.first.menu_item_name).count %> </p>                
+                <%= button_to "-", { :controller => "shopping_cart", :action => "destroy", :id => cart_item.last.first.id, :menu_category_name => cart_item.last.first.menu_category_name,
+                                     :menu_item_id => cart_item.last.first.menu_item_id, :menu_item_name => cart_item.last.first.menu_item_name,
+                                     :menu_item_price => cart_item.last.first.menu_item_price }, method: :delete, remote: true, class: "btn plus-minus btn-success" %>
+                
+              </div></td>
+              <td><p class="shoppingCart-Item"> ₹ <%= @cart_items.where(menu_item_name: cart_item.last.first.menu_item_name).count * cart_item.last.first.menu_item_price %> </p></td>
+
+            
+            </tr>
+
+          
+        <% end %>
+        
+        <tr> 
+        <td><p class="shoppingCart-Item">Total</p></td>
+        <td></td>
+        <td><p class="shoppingCart-Item"> ₹ <%= total %> </p></td>
+        </tr>
+        </tbody>
+        </table>
+
+        <div style="text-align:center;">
+          <%= link_to "Proceed to Checkout", cafe_checkout_path, class: "btn btn-success btn-sm ", style: "color:#fff;" %>
+        </div>
+</section>
+</div>
+
+<br/><br/><br/>
+
+</article>
